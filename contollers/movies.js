@@ -1,16 +1,15 @@
 const movieService= require('../services/movies')
 const httpStatus = require('http-status-codes');
+const Tag = require('../database/models/tag');
 
 const getMovies = async (req,res,next) => {
-    const {page} = req.query;
-    const response = await movieService.getMovies(page);   
-    console.log(response) 
+    const {page,isWatchLater} = req.query;
+    const response = await movieService.getMovies(page,isWatchLater);   
     
     res.status(httpStatus.StatusCodes.OK).send(response);
 }
 
 const updateMovie = async (req,res,next) => {
-    console.log(req.body,req.params,req.query);
     const {isWatchLater} = req.body;
     const {id} = req.params;
     console.log(req.body)
@@ -18,4 +17,4 @@ const updateMovie = async (req,res,next) => {
     res.status(httpStatus.StatusCodes.CREATED).send(response);
 }
 
-module.exports = { getMovies, updateMovie }
+module.exports = { getMovies, updateMovie, getSelectOptions }
