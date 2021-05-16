@@ -8,6 +8,7 @@ if (process.env.NODE_ENV !== "production") {
 require("./config/db-connection");
 const movieRouter = require("./routes/movies");
 const cors = require("cors");
+const path = require("path");
 
 app.use(cors());
 app.use(express.json({ limit: "50mb" }));
