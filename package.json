@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "heroku-postbuild":"node_modules/.bin/sequelize db:migrate --url `${process.env.DATABASE_URL}` && node_modules/.bin/sequelize db:seed:all --url `${process.env.DATABASE_URL}` && cd frontend && npm install && npm install --only=dev --no-shrinkwrap && npm run build",
+    "heroku-postbuild":"node_modules/.bin/sequelize db:migrate --url $DATABASE_URL && node_modules/.bin/sequelize db:seed:all --url $DATABASE_URL && cd frontend && npm install && npm install --only=dev --no-shrinkwrap && npm run build",
     "start": "node server.js"
   },
   "dependencies": {
