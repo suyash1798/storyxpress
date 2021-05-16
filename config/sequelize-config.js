@@ -16,5 +16,8 @@ module.exports = {
     dialect: `${process.env.DIALECT}`,
     logging: true,
     ssl: true,
+    dialectOptions:{
+      ssl: true,
+    }
   },
 };
