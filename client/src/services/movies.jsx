@@ -8,12 +8,12 @@ const getFilteredMovies = async (page) => {
     },
     { encode: true }
   );
-  const response = await axios.get(`http://localhost:3000/movies?${query}`);
+  const response = await axios.get(`https://suyash-tiwari-storyxpress.herokuapp.com/movies?${query}`);
   return response.data;
 };
 
 const updateMovies = async (id, isWatchLater) => {
-  const response = await axios.put(`http://localhost:3000/movies/${id}`, {
+  const response = await axios.put(`https://suyash-tiwari-storyxpress.herokuapp.com/movies/${id}`, {
     isWatchLater,
   });
   return response;
