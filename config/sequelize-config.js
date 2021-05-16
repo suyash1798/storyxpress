@@ -15,5 +15,6 @@ module.exports = {
     host: `${process.env.HOSTNAME}`,
     dialect: `${process.env.DIALECT}`,
     logging: true,
+    ssl: true,
   },
 };
