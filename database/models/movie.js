@@ -10,6 +10,7 @@ Movie.init({
   id: {type:DataTypes.INTEGER,primaryKey:true},
   title: DataTypes.STRING,
   year: DataTypes.INTEGER,
+  isWatchLater: DataTypes.BOOLEAN,
 }, {
   sequelize,
   modelName: "Movie",

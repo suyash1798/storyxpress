@@ -1,12 +1,12 @@
-'use strict';
+"use strict";
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('movies', {
+    await queryInterface.createTable("movies", {
       id: {
         allowNull: false,
         type: Sequelize.INTEGER,
         unique: true,
-        primaryKey: true
+        primaryKey: true,
       },
       title: {
         type: Sequelize.STRING,
@@ -15,10 +15,15 @@ module.exports = {
       year: {
         type: Sequelize.INTEGER,
         allowNull: true,
-      }
+      },
+      isWatchLater: {
+        type: Sequelize.BOOLEAN,
+        allowNull: true,
+        defaultValue: false
+      },
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('movies');
-  }
+    await queryInterface.dropTable("movies");
+  },
 };
