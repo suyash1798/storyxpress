@@ -17,7 +17,10 @@ module.exports = {
     logging: true,
     ssl: true,
     dialectOptions:{
-      ssl: true,
+      ssl: {
+        require:true,
+        rejectUnauthorized:false
+      },
     }
   },
 };
