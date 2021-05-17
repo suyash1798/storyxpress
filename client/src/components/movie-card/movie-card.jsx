@@ -80,7 +80,7 @@ function MovieCardComponent({ movie, onUpdate }) {
                       name="read-only"
                       value={parseFloat(movie.rating)}
                       readOnly
-                      precision={0.05}
+                      precision={0.5}
                     />
                   </Grid>
                 </Grid>
