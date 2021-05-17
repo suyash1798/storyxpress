@@ -25,13 +25,13 @@ function MovieCardComponent({ movie, onUpdate }) {
           <Grid item>
             <Grid container direction="column">
               <Grid item>
-                <Grid container direction="row">
-                  <Grid item xl={10}>
+                <Grid container direction="row" >
+                  <Grid item xs={8} sm={10} xl={10}>
                     <Typography variant="h6" component="h6" gutterBottom>
                       {movie.title}
                     </Typography>
                   </Grid>
-                  <Grid item xl={2}>
+                  <Grid item xs={4} sm={2} xl={2}>
                     <IconButton
                       color={movie.isWatchLater ? "primary" : "default"}
                       onClick={onClickWatchLater}
@@ -80,7 +80,7 @@ function MovieCardComponent({ movie, onUpdate }) {
                       name="read-only"
                       value={parseFloat(movie.rating)}
                       readOnly
-                      precision={0.5}
+                      precision={0.1}
                     />
                   </Grid>
                 </Grid>

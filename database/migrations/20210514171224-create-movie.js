@@ -21,6 +21,11 @@ module.exports = {
         allowNull: true,
         defaultValue: false
       },
+      rating:{
+        type: Sequelize.DECIMAL,
+        allowNull: true,
+        defaultValue: 0,
+      }
     });
   },
   down: async (queryInterface, Sequelize) => {

@@ -12,48 +12,48 @@ const getMovies = async (
   year,
   rating
 ) => {
-  console.log(isWatchLater);
-  const countQuery = `(SELECT ROUND(AVG(rating),2) as "rating" FROM "ratings" AS "ratings" where "ratings"."movieId" = "Movie"."id")`;
-
-  const moviesWithCount = await Movie.findAndCountAll({
-    subQuery: false,
-    where: {
-      ...(isWatchLater && { isWatchLater: isWatchLater.eq }),
-      ...(search && { title: { [sequelize.Op.iLike]: `${search.eq}%` } }),
-      ...(tag && { "$tags.tag$": { [sequelize.Op.iLike]: `${tag.eq}%` } }),
-      ...(genre && {
-        "$genres.genre$": { [sequelize.Op.iLike]: `${genre.eq}%` },
-      }),
-      ...(year && {
-        year: {
-          ...(year.lte && { [sequelize.Op.lte]: year.lte }),
-          ...(year.gte && { [sequelize.Op.gte]: year.gte }),
-        },
-      }),
-      ...(rating && {
-        [sequelize.Op.and]: [
-          sequelize.literal(
-            `EXISTS(SELECT * FROM (SELECT ROUND(AVG(rating),2) as "rating" FROM "ratings" AS "ratings" where "ratings"."movieId" = "Movie"."id") as ratings WHERE "ratings"."rating" >= ${parseFloat(
-              rating.eq
-            )} AND "ratings"."rating" < ${parseFloat(rating.eq) + 0.5})`
-          ),
-        ],
-      }),
-    },
+  const where = {
+    ...(isWatchLater && { isWatchLater: isWatchLater.eq }),
+    ...(search && { title: { [sequelize.Op.iLike]: `${search.eq}%` } }),
+    ...(tag && { "$tags.tag$": { [sequelize.Op.iLike]: `${tag.eq}%` } }),
+    ...(genre && {
+      "$genres.genre$": { [sequelize.Op.iLike]: `${genre.eq}%` },
+    }),
+    ...(year && {
+      year: {
+        ...(year.lte && { [sequelize.Op.lte]: year.lte }),
+        ...(year.gte && { [sequelize.Op.gte]: year.gte }),
+      },
+    }),
+    ...(rating && {
+      rating: {
+        [sequelize.Op.lte]: parseFloat(rating.eq) + 0.5,
+        [sequelize.Op.gt]: parseFloat(rating.eq) - 0.5,
+      },
+    }),
+  };
+  const movies = await Movie.findAll({
+    where,
     attributes: [
       sequelize.literal('DISTINCT ON("Movie".id) "Movie".id'),
       "id",
       "title",
       "year",
       "isWatchLater",
-      [sequelize.literal(countQuery), "rating"],
+      "rating",
     ],
     include: ["tags", "genres"],
-    limit: 10,
+    limit: 20,
     offset: (page.eq - 1) * 20,
+    subQuery: false,
   });
 
-  return { movies: moviesWithCount.rows, total: moviesWithCount.count };
+  const count = await Movie.count({
+    where,
+    include: ["tags", "genres"],
+    distinct:true,
+  });
+  return { movies: movies, total: count };
 };
 
 const updateMovie = async (id, isWatchLater) => {

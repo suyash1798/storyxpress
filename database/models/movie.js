@@ -11,6 +11,7 @@ Movie.init({
   title: DataTypes.STRING,
   year: DataTypes.INTEGER,
   isWatchLater: DataTypes.BOOLEAN,
+  rating: DataTypes.DECIMAL,
 }, {
   sequelize,
   modelName: "Movie",

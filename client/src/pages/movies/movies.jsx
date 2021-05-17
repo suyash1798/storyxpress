@@ -21,6 +21,9 @@ function MoviesPage(props) {
 
   useEffect(() => {
     const getMovies = async () => {
+      if(currentPage > pages){
+        setCurrentPage(1)
+      }
       const { movies, total } = await MoviesService.getFilteredMovies(
         currentPage,
         isWishlist,
@@ -41,7 +44,7 @@ function MoviesPage(props) {
     }
     
     getMovies();
-  }, [currentPage, total,isWishlist,filters]);
+  }, [currentPage, total, isWishlist, filters, pages]);
   
   const onWishlist = ()=>{
     setIsWishlist(!isWishlist);
@@ -49,7 +52,6 @@ function MoviesPage(props) {
   
   const onSearch = (data)=>{
     setFilters(data)
-    console.log(filters)
   }
 
   return (
